@@ -1,37 +1,37 @@
-# Сценарий взаимодействия пользователя с игрой  
+# The scenario of user interaction with the game  
   
-При запуске игрок попадает в меню. На выбор доступно три режима:  
-1. Режим **"Против ИИ"**  
-	Начинается одиночная игра против ИИ  
-2. Режим **"Против игрока"**  
-	Начинается игра с двумя игроками за одним компьютером, которые ходят по очереди  
-3. Режим **"Кампании"**  
-	Запускается режим кампании (история, серия боев с ИИ и финальный босс)  
+When starting, the player enters the menu. There are three modes to choose from:  
+1. Mode **"Against AI"**  
+	The single player game against the AI begins  
+2. Mode **"Against the player"**  
+	The game begins with two players on the same computer, who take turns  
+3. Mode **"Campaigns"**  
+	Campaign mode is launched (story, a series of AI battles and the final boss)  
   
-Сценарий режима "Против ИИ":  
-1. Игрокам случайно раздаются карты  
-2. Начинается ход игрока:  
-	а) Выбирает карту персонажа  
-	б) Спрашиваем, хочет ли выбрать карту способности  
-	в) Если нет, то ставим карту  
-	г) Если да, то применяем способность и ставим карту  
-3. Ход ИИ  
-4. Игра продолжается, пока игроки не выставят все карты персонажей  
-5. Подсчитываем суммарное здоровье игроков.  
+The scenario of the "Versus-AI" mode:  
+1. Players are randomly dealt cards  
+2. The player's turn begins:  
+	a) Selects a character card  
+	b) We ask if he wants to choose an ability card  
+	c) If not, then we put the card  
+	d) If yes, then apply the ability and place the card  
+3. The AI's move  
+4. The game continues until the players have exposed all the character cards.  
+5. Calculate the total health of the players.  
   
-Сценарий режима "Против игрока":  
-1. Игрокам случайно раздаются карты  
-2. Начинается ход игрока:  
-	а) Выбирает карту персонажа  
-	б) Спрашиваем, хочет ли выбрать карту способности  
-	в) Если нет, то ставим карту  
-	г) Если да, то применяем способность и ставим карту  
-3. Ход второго игрока (скрыть карты 1-го и показать 2-го)  
-4. Игра продолжается, пока игроки не выставят все карты персонажей  
-5. Подсчитываем суммарное здоровье игроков.  
+The scenario of the "Against the player" mode:  
+1. Players are randomly dealt cards  
+2. The player's turn begins:  
+	a) Selects a character card  
+	b) We ask if he wants to choose an ability card  
+	c) If not, then we put the card  
+	d) If yes, then apply the ability and place the card  
+3. The second player's turn (hide the cards of the 1st and show the 2nd)  
+4. The game continues until the players have exposed all the character cards.  
+5. Calculate the total health of the players.  
   
-Сценарий режима "Кампания":  
-Будет какое-то количество N эпизодов, состоящих из:  
-1. Вывод сообщения (история)  
-2. Запуск сценария "Игрок против ИИ"  
-3. Если игрок победил, переходим к следующему сценарию, иначе выводим, что игрок проиграл и выходим в меню.  
+The scenario of the Campaign mode:  
+There will be a certain number of N episodes, consisting of:  
+1. Message output (history)  
+2. Running the "Versus-AI" scenario  
+3. If the player has won, proceed to the next scenario, otherwise we will show that the player has lost and exit the menu.  

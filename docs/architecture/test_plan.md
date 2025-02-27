@@ -1,27 +1,26 @@
-# План тестирования  
+# Test plan    
   
-## Цели тестирования  
-1. Проверить корректность работы всех режимов игры (PvP, PvE, Campaign).  
-2. Убедиться, что карты (персонажи и способности) работают как ожидается.  
-3. Проверить корректность игрового поля и логики победы.  
+## Testing objectives  
+1. Check the correctness of all game modes (PvP, PvE, Campaign).  
+2. Make sure that the cards (characters and abilities) are working as expected.  
+3. Check the correctness of the playing field and the logic of victory.  
   
-## Типы тестов  
-1. **Модульные тесты**:  
-   - Тестирование отдельных классов (например, `Character`, `Ability`, `Player`).  
-2. **Интеграционные тесты**:  
-   - Тестирование взаимодействия между компонентами (например, игроки и игровое поле).  
-3. **Системные тесты**:  
-   - Тестирование всей системы в различных режимах.  
+## Types of tests  
+1. **Unit tests**:  
+- Testing of individual classes (for example, `Character`, `Ability`, `Player`).  
+2. **Integration tests**:  
+- Testing the interaction between components (for example, players and the playing field).    
+3. **System Tests**:  
+- Testing the entire system in various modes.  
   
-## Сценарии тестирования  
-1. **Режим PvP**:  
-   - Проверка корректности ходов игроков.  
-   - Проверка логики победы.  
-2. **Режим PvE**:  
-   - Проверка логики ИИ.  
-3. **Режим Campaign**:  
-   - Проверка прогресса по уровням и сюжетных событий.  
+## Testing Scenarios  
+1. **PvP mode**:  
+- Checking the correctness of the players' moves.  
+   - Checking the logic of victory.  
+2. **PvE Mode**:  
+- AI logic check.  
+3. **Campaign Mode**:  
+- Check progress on levels and story events.  
   
-## Инструменты тестирования  
+## Testing Tools  
 - **Google Test**  
- 

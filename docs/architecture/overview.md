@@ -1,12 +1,12 @@
-# Общее описание системы  
+# General description of the system  
   
-Карточная RPG-игра представляет собой пошаговую стратегию, где игроки используют карты персонажей и способностей для победы над противником. Игра поддерживает несколько режимов:  
-- **Игрок против игрока (PvP)**: Два игрока сражаются друг с другом.  
-- **Игрок против компьютера (PvE)**: Игрок сражается с ИИ.  
-- **Режим кампании**: Игрок проходит последовательность уровней с сюжетными событиями и боссами.  
+The RPG card game is a turn-based strategy game where players use character cards and abilities to defeat an opponent. The game supports multiple modes:  
+- **Player versus Player (PvP)**: Two players are fighting each other.  
+- **Player versus Computer (PvE)**: The player fights with the AI.  
+- **Campaign mode**: The player goes through a sequence of levels with story events and bosses.  
   
-Система построена на объектно-ориентированных принципах, с использованием паттернов проектирования. Основные компоненты:  
-- **Игровое поле**: Управляет картами и их размещением.  
-- **Игроки**: Управляют своими картами и ходами.  
-- **Карты**: Персонажи и способности с уникальными характеристиками.  
-- **Режимы игры**: Определяют логику для каждого режима (PvP, PvE, Campaign).  
+СThe system is built on object-oriented principles, using design patterns. Main components:  
+- **The playing field**: Manages the maps and their placement.  
+- **Players**: They manage their cards and moves.  
+- **Cards**: Characters and abilities with unique characteristics.  
+- **Game modes**: Define the logic for each mode (PvP, PvE, Campaign).  
