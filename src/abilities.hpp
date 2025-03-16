@@ -116,7 +116,7 @@ public:
 	DefenceBonus(int _defB) : AbilityCard("DefenceBonus"), defB(_defB) {}
 
 	void activate(Player& owner, Player& opponent, int r) override {
-		std::cout << "You have activated the Defense Bonus!\n";
+		std::cout << "You have activated the DefenceBonus!\n";
 
 		owner.addDefence(defB);
 	}
