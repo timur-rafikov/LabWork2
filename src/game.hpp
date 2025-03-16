@@ -2,12 +2,17 @@
 #define GAME_H
 
 #include <memory>
+#include <cstdlib>
 
 class Game;
 
 class GameMode {
 public:
 	virtual void start() = 0;
+
+	void clearScreen() {
+		std::system("clear");
+	}
 };
 
 class Game {

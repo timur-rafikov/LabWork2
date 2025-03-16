@@ -5,18 +5,64 @@
 Player::Player(const int& _id) {
 	id = _id;
 	defCoef = 0;
-	// TO DO: random for Characters and Abilities
 
-	for (int i = 0; i < 3; ++i) {
-		handCharacters.push_back(std::make_unique<Knight>());
-		handCharacters.push_back(std::make_unique<Archer>());
+	for (int i = 0; i < 9; ++i) {
+		int el = rand() % 13 + 1;
+		if (el <= 3)
+			handCharacters.push_back(std::make_unique<Knight>());
+		else if (el <= 6)
+			handCharacters.push_back(std::make_unique<Archer>());
+		else if (el <= 8)
+			handCharacters.push_back(std::make_unique<Magician>());
+		else if (el <= 10)
+			handCharacters.push_back(std::make_unique<Healer>());
+		else if (el == 11)
+			handCharacters.push_back(std::make_unique<Engineer>());
+		else if (el == 12)
+			handCharacters.push_back(std::make_unique<Nekromancer>());
+		else
+			handCharacters.push_back(std::make_unique<Berserk>());
 	}
-	handCharacters.push_back(std::make_unique<Engineer>());
-	handCharacters.push_back(std::make_unique<Healer>());
-	handCharacters.push_back(std::make_unique<Berserk>());
 
-	for (int i = 0; i < 5; ++i) 
-		handAbilities.push_back(std::make_unique<HealthBonus>());
+	for (int i = 0; i < 5; ++i) {
+		int el = rand() % 9 + 1;
+		switch (el) {
+			case 1:
+				handAbilities.push_back(std::make_unique<HealthBonus>(rand() % 4 + 1));
+				break;
+			case 2:
+				handAbilities.push_back(std::make_unique<DamageBonus>(rand() % 4 + 1));
+				break;
+			case 3:
+				handAbilities.push_back(std::make_unique<CommonHealthBonus>(rand() % 4 + 1));
+				break;
+			case 4:
+				handAbilities.push_back(std::make_unique<DefenceBonus>(rand() % 2 + 1));
+				break;
+			case 5:
+				handAbilities.push_back(std::make_unique<ReflectionDamage>());
+				break;
+			case 6:
+				handAbilities.push_back(std::make_unique<CardTheft>());
+				break;
+			case 7:
+				handAbilities.push_back(std::make_unique<FireBall>(rand() % 3 + 4, rand() % 3 + 1));
+				break;
+			case 8:
+				handAbilities.push_back(std::make_unique<ShieldRowBonus>());
+				break;
+			case 9:
+				handAbilities.push_back(std::make_unique<RageBonus>());
+				break;
+			default:
+				break;
+		}
+	}
+	// handAbilities.push_back(std::make_unique<CardTheft>());	
+	// handAbilities.push_back(std::make_unique<FireBall>(6, 3));
+	// handAbilities.push_back(std::make_unique<ShieldRowBonus>());
+	// handAbilities.push_back(std::make_unique<RageBonus>());
+	// handAbilities.push_back(std::make_unique<ReflectionDamage>());
 
 	field.resize(2);
 	for (int i = 0; i < 2; ++i) {
@@ -38,13 +84,35 @@ std::unique_ptr<Card> Player::popAbilityFromHand(int index) {
 	return ret;
 }
 
+std::unique_ptr<Card> Player::popDeadCharacter(int index) {
+	auto ret = std::move(deadCharacters[index]);
+	deadCharacters.erase(deadCharacters.begin() + index);
+	return ret;
+}
+
+void Player::activateCharacterCard(Player& owner, Player& opponent, int index, int row, bool ai) {
+	if (!ai)
+		handCharacters[index]->activate(owner, opponent, row);
+	else
+		handCharacters[index]->activateAI(owner, opponent, row);
+	auto characterCard = dynamic_cast<CharacterCard*>(handCharacters[index].get());
+	if (characterCard) 
+		defCoef += characterCard->getDefenseBonus();
+	else 
+		std::cerr << "Error: Card is not a CharacterCard!\n";
+}
+
+void Player::moveCharacterToDead(int row, int col) {
+	auto deadChar = std::move(field[row][col]);
+	field[row][col] = std::make_unique<CharacterCard>("EmptySlot", 0, 0, 0, 0);
+	deadCharacters.push_back(std::move(deadChar));
+}
 
 void Player::takeDamage(int row, int col, int dmg) {
 	if (field[row][col]->getType() == "EmptySlot") {
-		std::cout << "You missed!\n";
+		std::cout << "Miss!\n";
 		return;
 	}
-	std::cout << "You striked!\n";
 	dmg = damageReduction(dmg);
 
 	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
@@ -52,10 +120,26 @@ void Player::takeDamage(int row, int col, int dmg) {
 		std::cerr << "Error: no CharacterCard\n";
 	}
 
+	bool reflected = characterCard->getReflection();
+	if (!reflected)
+		std::cout << "Striked!\n";
+	else std::cout << "The damage was reflected!\n";
 	characterCard->takeDamage(dmg);
 	std::cout << "Current Health attacked character: " << characterCard->getHealth() << '\n';
 	if (characterCard->getHealth() <= 0) // death
 		moveCharacterToDead(row, col);
+}
+
+void Player::healingCharacter(int row, int col, int amount) {
+	// field[row][col]->heal(amount);
+	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
+	if (characterCard) {
+		if (characterCard->getType() == "EmptySlot")
+			return;
+		characterCard->heal(amount);
+	}
+	else
+		std::cerr << "Error: No characterCard to heal\n";
 }
 
 bool Player::isFieldFull() const {
@@ -68,6 +152,22 @@ bool Player::isFieldFull() const {
 	return true;
 }
 
+bool Player::getReflection(int row, int col) {
+	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
+	if (characterCard)
+		return characterCard->getReflection();
+	else std::cerr << "Error: No characterCard to getReflection\n";
+	return false;
+}
+
+void Player::setReflection(int row, int col) {
+	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
+	if (characterCard)
+		characterCard->setReflection();
+	else std::cerr << "Error: No characterCard to setReflection\n";
+}
+
+
 int Player::getSumHealthOnField() const {
 	int sum = 0;
 	for (int i = 0; i < 2; ++i) {
@@ -76,7 +176,7 @@ int Player::getSumHealthOnField() const {
 			if (!characterCard) {
 				std::cerr << "Error: no CharacterCard\n";
 			}
-			sum += characterCard->getHealth();
+			sum += std::max(0, characterCard->getHealth());
 		}
 	}
 	return sum;
@@ -119,8 +219,8 @@ void Player::printField(bool reverse) const {
 	}
 }
 
-void Player::printHand() const {
-	std::cout << "Player " + std::to_string(id) << " CHARACTERS:\n";
+void Player::printHand(bool ai) const {
+	std::cout << "Player " + (ai ? "" : std::to_string(id)) << " CHARACTERS:\n";
 	for (int i = 0; i < (int)handCharacters.size(); ++i) {
 		std::cout << handCharacters[i]->getType() << ' ';
 	}

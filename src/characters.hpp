@@ -24,8 +24,26 @@ public:
 		if (opponent.getId() == 1) {
 			col = 3 - col;
 		}
+
+		bool reflected = opponent.getReflection(0, col);
 		opponent.takeDamage(0, col, getDamage());
-		std::cout << "The knight attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+		if (!reflected)
+			std::cout << "The knight attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		if (r == 1)
+			return;
+
+		for (int col = 0; col < 4; ++col) {
+			if (opponent.getCardType(0, col) != "EmptySlot") {
+				bool reflected = opponent.getReflection(0, col);
+				opponent.takeDamage(0, col, getDamage());
+				if (!reflected)
+					std::cout << "The AI knight attacked you, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+				return;
+			}
+		}
 	}
 };
 
@@ -43,8 +61,25 @@ public:
 			row = 1 - row; // reversing coordinates
 			col = 3 - col;
 		}
+
+		bool reflected = opponent.getReflection(row, col);
 		opponent.takeDamage(row, col, getDamage());
-		std::cout << "The archer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+		if (!reflected)
+			std::cout << "The archer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				if (opponent.getCardType(row, col) != "EmptySlot") {
+					bool reflected = opponent.getReflection(row, col);
+					opponent.takeDamage(row, col, getDamage());
+					if (!reflected)
+						std::cout << "The AI archer attacked you, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+					return;
+				}
+			}
+		}
 	}
 };
 
@@ -58,16 +93,33 @@ public:
 		std::cout << "Choose a row (0-1) and column (0-3) to attack: ";
 		std::cin >> row >> col;
 
-		srand(time(0));
-
 		int critDamage = rand() % 5; // 0-4
 
 		if (opponent.getId() == 1) {
 			row = 1 - row; // reversing coordinates
 			col = 3 - col;
 		}
+
+		bool reflected = opponent.getReflection(row, col);
 		opponent.takeDamage(row, col, getDamage() + critDamage);
-		std::cout << "The Magician attacked, dealing " + std::to_string(opponent.damageReduction(getDamage() + critDamage)) + " damage!\n";
+		if (!reflected)
+			std::cout << "The Magician attacked, dealing " + std::to_string(opponent.damageReduction(getDamage() + critDamage)) + " damage!\n";
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				if (opponent.getCardType(row, col) != "EmptySlot") {
+					int critDamage = rand() % 5;
+
+					bool reflected = opponent.getReflection(row, col);
+					opponent.takeDamage(row, col, getDamage() + critDamage);
+					if (!reflected)
+						std::cout << "The AI Magician attacked you, dealing " + std::to_string(opponent.damageReduction(getDamage() + critDamage)) + " damage!\n";
+					return;
+				}
+			}
+		}
 	}
 };
 
@@ -78,7 +130,11 @@ public:
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "It's an Engineer! You can't attack, but you are given defense points and taken away from the opponent.\n";
 
-		opponent.decreaseDefense(1);
+		opponent.addDefence(-1);
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		opponent.addDefence(-1);
 	}
 };
 
@@ -92,7 +148,22 @@ public:
 		std::cout << "Choose a row (0-1) and column (0-3) to heal: ";
 		std::cin >> row >> col;
 
+		if (owner.getId() == 1) {
+			row = 1 - row; // reversing coordinates
+			col = 3 - col;
+		}
 		owner.healingCharacter(row, col, getHealAmount());
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				if (owner.getCardType(row, col) != "EmptySlot") {
+					owner.healingCharacter(row, col, getHealAmount());
+					return;
+				}
+			}
+		}
 	}
 };
 
@@ -110,16 +181,41 @@ public:
 			row = 1 - row; // reversing coordinates
 			col = 3 - col;
 		}
+
+		bool reflected = opponent.getReflection(row, col);
 		opponent.takeDamage(row, col, getDamage());
-		std::cout << "The Nekromancer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+		if (!reflected)
+			std::cout << "The Nekromancer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
 
-		owner.printDead();
-		int cardIndex;
-		std::cout << "Choose a card to revive (index): ";
-		std::cin >> cardIndex;
+		if (!owner.isDeadCharEmpty()) {
+			owner.printDead();
+			int cardIndex;
+			std::cout << "Choose a card to revive (index): ";
+			std::cin >> cardIndex;
 
-		auto characterCard = owner.popDeadCharacter(cardIndex);
-		owner.addCharacterToHand(std::move(characterCard));
+			auto characterCard = owner.popDeadCharacter(cardIndex);
+			owner.addCharacterToHand(std::move(characterCard));
+		}
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				if (opponent.getCardType(row, col) != "EmptySlot") {
+					bool reflected = opponent.getReflection(row, col);
+					opponent.takeDamage(row, col, getDamage());
+					if (!reflected)
+						std::cout << "The AI Nekromancer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
+					
+					if (!owner.isDeadCharEmpty()) {
+						int cardIndex = 0;
+						auto characterCard = owner.popDeadCharacter(cardIndex);
+						owner.addCharacterToHand(std::move(characterCard));
+					}
+					return;
+				}
+			}
+		}
 	}
 };
 
@@ -145,6 +241,23 @@ public:
 		if (col < 3)
 			opponent.takeDamage(row, col + 1, 2);
 		std::cout << "The Berserker attacked!\n";
+	}
+
+	void activateAI(Player& owner, Player& opponent, int r) override {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				if (opponent.getCardType(row, col) != "EmptySlot") {
+					opponent.takeDamage(row, col, 100);
+
+					opponent.takeDamage(1 - row, col, 2);
+					if (col > 0) 
+						opponent.takeDamage(row, col - 1, 2);
+					if (col < 3)
+						opponent.takeDamage(row, col + 1, 2);
+					return;
+				}
+			}
+		}
 	}
 };
 

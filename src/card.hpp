@@ -14,6 +14,7 @@ protected:
 public:
 	Card(const std::string& _type) : type(_type) {}
 	virtual void activate(Player& owner, Player& opponent, int row) = 0;
+	virtual void activateAI(Player& owner, Player& opponent, int row) = 0;
 	virtual void printInfo() const = 0;
 
 	std::string getType() {
@@ -27,12 +28,21 @@ private:
 	int damage;			// Damage
 	int healAmount;		// The amount of healing
 	int defenseBonus;	// Bonus for defCoef
+	bool reflection;
 public:
 	CharacterCard(const std::string& _type, int _health, int _damage, int _healAmount, int _defenseBonus)
-		: Card(_type), health(_health), damage(_damage), healAmount(_healAmount), defenseBonus(_defenseBonus) {}
+		: Card(_type), health(_health), damage(_damage), healAmount(_healAmount), defenseBonus(_defenseBonus), reflection(false) {}
 
 	virtual void activate(Player& owner, Player& opponent, int row) override {
 		std::cout << "Character '" + type + "' has been activated...\n";
+	}
+
+	virtual void activateAI(Player& owner, Player& opponent, int row) override {
+		std::cout << "AI Character has been activated...\n";
+	}
+
+	void setReflection() {
+		reflection = true;
 	}
 
 	void printInfo() const override {
@@ -55,8 +65,15 @@ public:
 	int getDefenseBonus() const {
 		return defenseBonus;
 	}
+	bool getReflection() const {
+		return reflection;
+	}
 
 	void takeDamage(int dmg) {
+		if (reflection) {
+			reflection = false;
+			return;
+		}
 		health -= dmg;
 	}
 	void heal(int amount) {
@@ -71,8 +88,8 @@ public:
 	virtual void activate(Player& owner, Player& opponent, int row) {
 		std::cout << "Ability '" + type + "' has been activated...\n";
 	}
-	virtual void printInfo() const {
-		std::cout << "Ability type: " << type << '\n';
+	virtual void activateAI(Player& owner, Player& opponent, int row) {
+		std::cout << "AI Ability has been activated...\n";
 	}
 };
 
