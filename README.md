@@ -5,7 +5,7 @@
 st128186@student.spbu.ru  
 @trafikprog
 ## Description
-The lab work is to develop the core of an RPG card game with a graphical interface.  
+The lab work is to develop the core of an RPG card game.  
 The description will be edited in the future.  
 ## Build
 make
