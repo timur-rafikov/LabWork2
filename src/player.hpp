@@ -15,6 +15,7 @@ private:
 	std::vector<std::unique_ptr<Card>> deadCharacters;
 	int id;
 	int defCoef;
+	int skipCount;
 public:
 	Player(const int& _id);
 	std::unique_ptr<Card> popCharacterFromHand(int index);
@@ -66,12 +67,24 @@ public:
 
 	bool isFieldFull() const;
 
+	void addSkip() {
+		skipCount++;
+	}
+
+	int getSkipCount() const {
+		return skipCount;
+	}
+
 	int getSizeHandChars() const {
 		return (int)handCharacters.size();
 	}
 
 	int getSizeHandAbils() const {
 		return (int)handAbilities.size();
+	}
+
+	int getSizeDeadChars() const {
+		return (int)deadCharacters.size();
 	}
 
 	int getDefCoef() const {
@@ -95,6 +108,10 @@ public:
 
 	std::string getCardType(int row, int col) const {
 		return field[row][col]->getType();
+	}
+
+	bool isEmptySlot(int row, int col) const {
+		return (getCardType(row, col) == "EmptySlot");
 	}
 
 	std::string getCardHandType(int index) const {

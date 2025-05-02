@@ -20,6 +20,8 @@ public:
 		int col;
 		std::cout << "Choose a column (0-3) to attack melee row: ";
 		std::cin >> col;
+		if (col > 3 || col < 0)
+			return;
 
 		if (opponent.getId() == 1) {
 			col = 3 - col;
@@ -56,6 +58,8 @@ public:
 		std::cout << "It's an Archer! You can attack all enemies.\n";
 		std::cout << "Choose a row (0-1) and column (0-3) to attack: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0)
+			return;
 
 		if (opponent.getId() == 1) {
 			row = 1 - row; // reversing coordinates
@@ -92,6 +96,8 @@ public:
 		std::cout << "It's a Magician! You can attack all enemies.\n";
 		std::cout << "Choose a row (0-1) and column (0-3) to attack: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0)
+			return;
 
 		int critDamage = rand() % 5; // 0-4
 
@@ -147,6 +153,8 @@ public:
 		std::cout << "It's a Healer! You can heal a character on the field by 4 points, which you select.\n";
 		std::cout << "Choose a row (0-1) and column (0-3) to heal: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0)
+			return;
 
 		if (owner.getId() == 1) {
 			row = 1 - row; // reversing coordinates
@@ -176,6 +184,8 @@ public:
 		std::cout << "It's a Nekromancer! You can attack any opponent and revive a random character.\n";
 		std::cout << "Choose a row (0-1) and column (0-3) to attack: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0)
+			return;
 
 		if (opponent.getId() == 1) {
 			row = 1 - row; // reversing coordinates
@@ -192,6 +202,8 @@ public:
 			int cardIndex;
 			std::cout << "Choose a card to revive (index): ";
 			std::cin >> cardIndex;
+			if (cardIndex < 0 || cardIndex >= owner.getSizeDeadChars())
+				return;
 
 			auto characterCard = owner.popDeadCharacter(cardIndex);
 			owner.addCharacterToHand(std::move(characterCard));
@@ -228,6 +240,8 @@ public:
 		std::cout << "It's a Berserk! You can instantly kill your chosen opponent and inflict damage on neighboring ones.\n";
 		std::cout << "Choose a row (0-1) and column (0-3) to attack: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0)
+			return;
 
 		if (opponent.getId() == 1) {
 			row = 1 - row; // reversing coordinates

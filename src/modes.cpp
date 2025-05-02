@@ -27,9 +27,26 @@ void PvPMode::processPlayerTurn(Player& currentPlayerObj, Player& opponentPlayer
 	if (!currentPlayerObj.isCharEmpty() && !currentPlayerObj.isFieldFull()) {
 		std::cout << "\nChoose a character card to play (index): ";
 		std::cin >> cardIndex;
+		if (cardIndex < 0 || cardIndex >= currentPlayerObj.getSizeHandChars()) {
+			std::cout << "Your turn is missed...\n";
+			currentPlayerObj.addSkip();
+			return;
+		}
 
 		std::cout << "Choose a row (0-1) and column (0-3) to place card: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0){
+			std::cout << "Your turn is missed...\n";
+			currentPlayerObj.addSkip();
+			return;
+		}
+
+		// checking the empty slot
+		if (!currentPlayerObj.isEmptySlot(row, col)) {
+			std::cout << "This field is not empty! Your turn is missed...\n";
+			currentPlayerObj.addSkip();
+			return;
+		}
 
 		currentPlayerObj.activateCharacterCard(currentPlayerObj, opponentPlayerObj, cardIndex, row, false);
 
@@ -48,6 +65,8 @@ void PvPMode::processPlayerTurn(Player& currentPlayerObj, Player& opponentPlayer
 	if (!currentPlayerObj.isAbilEmpty()) {
 		std::cout << "\nChoose an ability card to play (index from 0): ";
 		std::cin >> cardIndex;
+		if (cardIndex < 0 || cardIndex >= currentPlayerObj.getSizeHandAbils())
+			return;
 
 		currentPlayerObj.activateAbilityCard(currentPlayerObj, opponentPlayerObj, cardIndex, false);
 	}
@@ -59,7 +78,9 @@ void PvPMode::processPlayerTurn(Player& currentPlayerObj, Player& opponentPlayer
 
 bool PvPMode::checkWin() {
 	// if ((player1.isCharEmpty() || player1.isFieldFull()) && (player2.isCharEmpty() || player2.isFieldFull()) && player1.isAbilEmpty() && player2.isAbilEmpty()) {
-	if ((player1.isCharEmpty() && player1.isFieldFull()) || (player2.isCharEmpty() && player2.isFieldFull())) {
+	if (((player1.isCharEmpty() || player1.isFieldFull()) && (player2.isCharEmpty() || player2.isFieldFull())) || player1.getSkipCount() >= 2 || player2.getSkipCount() >= 2) {
+		clearScreen();
+
 		int sum1 = player1.getSumHealthOnField(), sum2 = player2.getSumHealthOnField();
 		if (sum1 > sum2)
 			std::cout << "Player 1 win!\n";
@@ -131,23 +152,40 @@ void PvEMode::processPlayerTurn() {
 	if (!player.isCharEmpty() && !player.isFieldFull()) {
 		std::cout << "\nChoose a character card to play (index): ";
 		std::cin >> cardIndex;
+		if (cardIndex < 0 || cardIndex >= player.getSizeHandChars()) {
+			std::cout << "Your turn is missed...\n";
+			player.addSkip();
+			return;
+		}
 
 		std::cout << "Choose a row (0-1) and column (0-3) to place card: ";
 		std::cin >> row >> col;
+		if (row > 1 || row < 0 || col > 3 || col < 0) {
+			std::cout << "Your turn is missed...\n";
+			player.addSkip();
+			return;
+		}
+
+		// checking empty slot
+		if (!player.isEmptySlot(row, col)) {
+			std::cout << "This field is not empty! Your turn is missed...\n";
+			player.addSkip();
+			return;
+		}
 
 		player.activateCharacterCard(player, AIPlayer, cardIndex, row, false);
 
 		auto cardChar = player.popCharacterFromHand(cardIndex);
 
 		player.moveCardToField(std::move(cardChar), row, col);
-
-		//std::cout << "Card played successfully!\n";
 	}
 
 
 	if (!player.isAbilEmpty()) {
 		std::cout << "\nChoose an ability card to play (index from 0): ";
 		std::cin >> cardIndex;
+		if (cardIndex < 0 || cardIndex >= player.getSizeHandChars())
+			return;
 
 		player.activateAbilityCard(player, AIPlayer, cardIndex, false);
 	}
@@ -162,9 +200,6 @@ void PvEMode::makeAITurn() {
 	if (!AIPlayer.isCharEmpty() && !AIPlayer.isFieldFull()) {
 
 		cardIndex = rand() % AIPlayer.getSizeHandChars();
-
-		// std::cout << "Choose a row (0-1) and column (0-3) to place card: ";
-		// std::cin >> row >> col;
 
 		if (AIPlayer.getCardHandType(cardIndex) == "Knight") {
 			for (int j = 0; j < 4; ++j)
@@ -210,8 +245,7 @@ void PvEMode::makeAITurn() {
 }
 
 bool PvEMode::checkWin() {
-	// if ((player.isCharEmpty() || player.isFieldFull()) && (AIPlayer.isCharEmpty() || AIPlayer.isFieldFull()) && player.isAbilEmpty() && AIPlayer.isAbilEmpty()) {
-	if ((player.isCharEmpty() || player.isFieldFull()) || (AIPlayer.isCharEmpty() || AIPlayer.isFieldFull())) {
+	if (((player.isCharEmpty() || player.isFieldFull()) && (AIPlayer.isCharEmpty() || AIPlayer.isFieldFull())) || player.getSkipCount() >= 2) {
 		clearScreen();
 		
 		int sumPlayer = player.getSumHealthOnField();

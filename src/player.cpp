@@ -5,6 +5,7 @@
 Player::Player(const int& _id) {
 	id = _id;
 	defCoef = 0;
+	skipCount = 0;
 
 	for (int i = 0; i < 9; ++i) {
 		int el = rand() % 13 + 1;
