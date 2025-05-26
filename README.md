@@ -20,4 +20,3 @@ make test
 ./test-game
 ## Clean
 make clean
-
