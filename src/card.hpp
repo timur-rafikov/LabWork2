@@ -75,6 +75,7 @@ public:
 			return;
 		}
 		health -= dmg;
+		std::cout << "In CharacterCard::takeDamage dmg: " << dmg << ' ' << " health: " << health << '\n';
 	}
 	void heal(int amount) {
 		health += amount;
