@@ -74,18 +74,24 @@ Player::Player(const int& _id) {
 }
 
 std::unique_ptr<Card> Player::popCharacterFromHand(int index) {
+	if (isCharEmpty())
+		throw std::out_of_range("handCharacters is empty");
 	auto ret = std::move(handCharacters[index]);
 	handCharacters.erase(handCharacters.begin() + index);
 	return ret;
 }
 
 std::unique_ptr<Card> Player::popAbilityFromHand(int index) {
+	if (isAbilEmpty())
+		throw std::out_of_range("handAbilities is empty");
 	auto ret = std::move(handAbilities[index]);
 	handAbilities.erase(handAbilities.begin() + index);
 	return ret;
 }
 
 std::unique_ptr<Card> Player::popDeadCharacter(int index) {
+	if (isDeadCharEmpty())
+		throw std::out_of_range("deadCharacters is empty");
 	auto ret = std::move(deadCharacters[index]);
 	deadCharacters.erase(deadCharacters.begin() + index);
 	return ret;

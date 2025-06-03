@@ -110,8 +110,14 @@ public:
 		return field[row][col]->getType();
 	}
 
+	int getCardHealth(int row, int col) const {
+		return dynamic_cast<CharacterCard*>(field[row][col].get())->getHealth();
+	}
+
 	bool isEmptySlot(int row, int col) const {
-		return (getCardType(row, col) == "EmptySlot");
+		if (row == 0 && row == 1 && col >= 0 && col <= 3)
+			return (getCardType(row, col) == "EmptySlot");
+		else return false;
 	}
 
 	std::string getCardHandType(int index) const {

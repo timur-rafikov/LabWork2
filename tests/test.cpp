@@ -169,12 +169,10 @@ TEST(PlayerTest, FieldManagement) {
     
     // Test damage and healing
     player.takeDamage(0, 0, 3);
-    auto characterCard = dynamic_cast<CharacterCard*>(player.popCharacterFromHand(0).get());
-    EXPECT_EQ(characterCard->getHealth(), 5); // Knight has 8 health initially
+    EXPECT_EQ(player.getCardHealth(0, 0), 5); // Knight has 8 health initially
     
     player.healingCharacter(0, 0, 2);
-    characterCard = dynamic_cast<CharacterCard*>(player.popCharacterFromHand(0).get());
-    EXPECT_EQ(characterCard->getHealth(), 7);
+    EXPECT_EQ(player.getCardHealth(0, 0), 7);
 }
 
 TEST(PlayerTest, DefenseMechanics) {
@@ -228,13 +226,18 @@ TEST(IntegrationTest, CharacterActivation) {
     // Place an archer for player2
     auto archer = std::make_unique<Archer>();
     player2.moveCardToField(std::move(archer), 0, 0);
+
+    std::istringstream fakeInput("0\n");
+    std::streambuf* originalCin = std::cin.rdbuf();
+    std::cin.rdbuf(fakeInput.rdbuf()); 
     
     // Activate knight's attack
-    player1.activateCharacterCard(player1, player2, 0, 0, false);
+    player1.activateCharacterCard(player1, player2, 0, 1, false);
+
+    std::cin.rdbuf(originalCin);
     
     // Check if archer took damage
-    auto archerCard = dynamic_cast<CharacterCard*>(player2.popCharacterFromHand(0).get());
-    EXPECT_LT(archerCard->getHealth(), 5); // Archer starts with 5 health
+    EXPECT_LT(player2.getCardHealth(0, 0), 5); // Archer starts with 5 health
 }
 
 TEST(IntegrationTest, AbilityActivation) {
