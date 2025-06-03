@@ -1,0 +1,5 @@
+<map id="AbilityCard" name="AbilityCard">
+<area shape="rect" id="Node000001" title="Represents an ability card that performs an effect when activated." alt="" coords="5,79,100,104"/>
+<area shape="rect" id="Node000002" href="$classCard.html" title="Base class for all cards in the game." alt="" coords="27,5,79,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,44,55,79,50,79,50,44"/>
+</map>

@@ -2,11 +2,17 @@
 #include "characters.hpp"
 #include "abilities.hpp"
 
+/**
+ * @brief Constructs a new Player and initializes the hand and field.
+ *        Randomly fills hand with character and ability cards.
+ * @param _id ID of the player.
+ */
 Player::Player(const int& _id) {
 	id = _id;
 	defCoef = 0;
 	skipCount = 0;
 
+	// Generate character hand
 	for (int i = 0; i < 9; ++i) {
 		int el = rand() % 13 + 1;
 		if (el <= 3)
@@ -25,6 +31,7 @@ Player::Player(const int& _id) {
 			handCharacters.push_back(std::make_unique<Berserk>());
 	}
 
+	// Generate ability hand
 	for (int i = 0; i < 5; ++i) {
 		int el = rand() % 9 + 1;
 		switch (el) {
@@ -59,12 +66,8 @@ Player::Player(const int& _id) {
 				break;
 		}
 	}
-	// handAbilities.push_back(std::make_unique<CardTheft>());	
-	// handAbilities.push_back(std::make_unique<FireBall>(6, 3));
-	// handAbilities.push_back(std::make_unique<ShieldRowBonus>());
-	// handAbilities.push_back(std::make_unique<RageBonus>());
-	// handAbilities.push_back(std::make_unique<ReflectionDamage>());
 
+	// Initialize field with empty slots
 	field.resize(2);
 	for (int i = 0; i < 2; ++i) {
 		for (int j = 0; j < 4; ++j) {
@@ -73,6 +76,11 @@ Player::Player(const int& _id) {
 	}
 }
 
+/**
+ * @brief Removes and returns a character card from hand.
+ * @param index Index of the character card.
+ * @return std::unique_ptr<Card> The removed card.
+ */
 std::unique_ptr<Card> Player::popCharacterFromHand(int index) {
 	if (isCharEmpty())
 		throw std::out_of_range("handCharacters is empty");
@@ -81,6 +89,11 @@ std::unique_ptr<Card> Player::popCharacterFromHand(int index) {
 	return ret;
 }
 
+/**
+ * @brief Removes and returns an ability card from hand.
+ * @param index Index of the ability card.
+ * @return std::unique_ptr<Card> The removed card.
+ */
 std::unique_ptr<Card> Player::popAbilityFromHand(int index) {
 	if (isAbilEmpty())
 		throw std::out_of_range("handAbilities is empty");
@@ -89,6 +102,11 @@ std::unique_ptr<Card> Player::popAbilityFromHand(int index) {
 	return ret;
 }
 
+/**
+ * @brief Removes and returns a dead character.
+ * @param index Index of the dead character.
+ * @return std::unique_ptr<Card> The removed card.
+ */
 std::unique_ptr<Card> Player::popDeadCharacter(int index) {
 	if (isDeadCharEmpty())
 		throw std::out_of_range("deadCharacters is empty");
@@ -97,11 +115,20 @@ std::unique_ptr<Card> Player::popDeadCharacter(int index) {
 	return ret;
 }
 
+/**
+ * @brief Activates a character card from hand.
+ * @param owner Owner player (usually this).
+ * @param opponent Opponent player.
+ * @param index Index of the card.
+ * @param row Row to activate the card into.
+ * @param ai Whether to use AI activation.
+ */
 void Player::activateCharacterCard(Player& owner, Player& opponent, int index, int row, bool ai) {
 	if (!ai)
 		handCharacters[index]->activate(owner, opponent, row);
 	else
 		handCharacters[index]->activateAI(owner, opponent, row);
+
 	auto characterCard = dynamic_cast<CharacterCard*>(handCharacters[index].get());
 	if (characterCard) 
 		defCoef += characterCard->getDefenseBonus();
@@ -109,12 +136,23 @@ void Player::activateCharacterCard(Player& owner, Player& opponent, int index, i
 		std::cerr << "Error: Card is not a CharacterCard!\n";
 }
 
+/**
+ * @brief Moves a character card from field to dead pile.
+ * @param row Field row.
+ * @param col Field column.
+ */
 void Player::moveCharacterToDead(int row, int col) {
 	auto deadChar = std::move(field[row][col]);
 	field[row][col] = std::make_unique<CharacterCard>("EmptySlot", 0, 0, 0, 0);
 	deadCharacters.push_back(std::move(deadChar));
 }
 
+/**
+ * @brief Applies damage to a character on the field.
+ * @param row Field row.
+ * @param col Field column.
+ * @param dmg Incoming damage.
+ */
 void Player::takeDamage(int row, int col, int dmg) {
 	if (field[row][col]->getType() == "EmptySlot") {
 		std::cout << "Miss!\n";
@@ -128,17 +166,20 @@ void Player::takeDamage(int row, int col, int dmg) {
 	}
 
 	bool reflected = characterCard->getReflection();
-	if (!reflected)
-		std::cout << "Striked!\n";
-	else std::cout << "The damage was reflected!\n";
+	std::cout << (reflected ? "The damage was reflected!\n" : "Striked!\n");
 	characterCard->takeDamage(dmg);
 	std::cout << "Current Health attacked character: " << characterCard->getHealth() << '\n';
-	if (characterCard->getHealth() <= 0) // death
+	if (characterCard->getHealth() <= 0)
 		moveCharacterToDead(row, col);
 }
 
+/**
+ * @brief Heals a character on the field.
+ * @param row Field row.
+ * @param col Field column.
+ * @param amount Amount to heal.
+ */
 void Player::healingCharacter(int row, int col, int amount) {
-	// field[row][col]->heal(amount);
 	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
 	if (characterCard) {
 		if (characterCard->getType() == "EmptySlot")
@@ -149,6 +190,10 @@ void Player::healingCharacter(int row, int col, int amount) {
 		std::cerr << "Error: No characterCard to heal\n";
 }
 
+/**
+ * @brief Checks if the field is full.
+ * @return true if full, false otherwise.
+ */
 bool Player::isFieldFull() const {
 	for (int i = 0; i < 2; ++i) {
 		for (int j = 0; j < 4; ++j) {
@@ -159,6 +204,12 @@ bool Player::isFieldFull() const {
 	return true;
 }
 
+/**
+ * @brief Gets reflection status of a card on the field.
+ * @param row Field row.
+ * @param col Field column.
+ * @return true if reflected, false otherwise.
+ */
 bool Player::getReflection(int row, int col) {
 	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
 	if (characterCard)
@@ -167,6 +218,11 @@ bool Player::getReflection(int row, int col) {
 	return false;
 }
 
+/**
+ * @brief Enables reflection for a card on the field.
+ * @param row Field row.
+ * @param col Field column.
+ */
 void Player::setReflection(int row, int col) {
 	auto characterCard = dynamic_cast<CharacterCard*>(field[row][col].get());
 	if (characterCard)
@@ -174,7 +230,10 @@ void Player::setReflection(int row, int col) {
 	else std::cerr << "Error: No characterCard to setReflection\n";
 }
 
-
+/**
+ * @brief Gets the total health of all characters on the field.
+ * @return int Sum of health values.
+ */
 int Player::getSumHealthOnField() const {
 	int sum = 0;
 	for (int i = 0; i < 2; ++i) {
@@ -189,6 +248,10 @@ int Player::getSumHealthOnField() const {
 	return sum;
 }
 
+/**
+ * @brief Prints the current state of the field.
+ * @param reverse Whether to print from the opponent's perspective.
+ */
 void Player::printField(bool reverse) const {
 	for (int i = (reverse ? 1 : 0); (reverse ? i >= 0 : i < 2); (reverse ? --i : ++i)) {
 		std::cout << (reverse ? 1 - i : i) << ' ';
@@ -226,6 +289,10 @@ void Player::printField(bool reverse) const {
 	}
 }
 
+/**
+ * @brief Prints the cards in the player's hand.
+ * @param ai If true, prints without player ID.
+ */
 void Player::printHand(bool ai) const {
 	std::cout << "Player " + (ai ? "" : std::to_string(id)) << " CHARACTERS:\n";
 	for (int i = 0; i < (int)handCharacters.size(); ++i) {
@@ -238,6 +305,9 @@ void Player::printHand(bool ai) const {
 	std::cout << '\n';
 }
 
+/**
+ * @brief Prints the player's dead characters.
+ */
 void Player::printDead() const {
 	std::cout << "Player " + std::to_string(id) << " dead characters:\n";
 	for (int i = 0; i < (int)deadCharacters.size(); ++i) {

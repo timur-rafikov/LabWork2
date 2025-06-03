@@ -1,0 +1,20 @@
+<map id="src/card.cpp" name="src/card.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="149,5,249,31"/>
+<area shape="rect" id="Node000002" href="$card_8hpp.html" title=" " alt="" coords="159,79,238,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,31,201,65,196,65,196,31"/>
+<area shape="rect" id="Node000003" href="$player_8hpp.html" title=" " alt="" coords="153,152,244,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,104,193,139,187,138,189,104"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,225,64,251"/>
+<area shape="poly" id="edge8_Node000002_Node000004" title=" " alt="" coords="186,106,128,154,59,218,55,214,125,150,182,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="88,225,165,251"/>
+<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="185,106,163,126,144,153,134,183,130,212,125,211,129,181,139,151,159,123,182,102"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="268,152,348,177"/>
+<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="218,102,280,142,277,147,215,106"/>
+<area shape="poly" id="edge7_Node000003_Node000002" title=" " alt="" coords="203,152,205,118,210,118,208,152"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="173,180,75,222,73,217,171,175"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="189,180,150,218,146,214,185,176"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="190,225,253,251"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="205,177,216,211,211,213,200,178"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="277,225,339,251"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="218,175,280,215,277,220,215,180"/>
+</map>

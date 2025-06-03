@@ -7,10 +7,25 @@
 #include <cstdlib>
 #include <string>
 
+
+/**
+ * @class Knight
+ * @brief A melee character that can attack enemies in the front row.
+ */
 class Knight : public CharacterCard {
 public:
+	/**
+     * @brief Constructs a Knight card.
+     */
 	Knight() : CharacterCard("Knight", 8, 4, 0, 0) {}
 
+	/**
+     * @brief Activates the Knight's ability for a human player.
+     * 
+     * @param owner The player who owns the Knight.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "It's a Knight! You can attack the nearest enemy.\n";
 		if ((r == 1 && owner.getId() == 2) || (r == 0 && owner.getId() == 1)) {
@@ -33,6 +48,13 @@ public:
 			std::cout << "The knight attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
 	}
 
+	/**
+     * @brief Activates the Knight's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Knight.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		if (r == 1)
 			return;
@@ -49,10 +71,24 @@ public:
 	}
 };
 
+/**
+ * @class Archer
+ * @brief A ranged character that can attack any cell.
+ */
 class Archer : public CharacterCard {
 public:
+	/**
+     * @brief Constructs an Archer card.
+     */
 	Archer() : CharacterCard("Archer", 5, 3, 0, 0) {}
 
+	/**
+     * @brief Activates the Archer's ability for a human player.
+     * 
+     * @param owner The player who owns the Archer.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "It's an Archer! You can attack all enemies.\n";
@@ -72,6 +108,13 @@ public:
 			std::cout << "The archer attacked, dealing " + std::to_string(opponent.damageReduction(getDamage())) + " damage!\n";
 	}
 
+	/**
+     * @brief Activates the Archer's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Archer.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		for (int row = 0; row < 2; ++row) {
 			for (int col = 0; col < 4; ++col) {
@@ -87,10 +130,24 @@ public:
 	}
 };
 
+/**
+ * @class Magician
+ * @brief A ranged character with a chance to deal critical damage.
+ */
 class Magician : public CharacterCard {
 public:
+	/**
+     * @brief Constructs a Magician card.
+     */
 	Magician() : CharacterCard("Magician", 4, 5, 0, 1) {}
 
+	/**
+     * @brief Activates the Magician's ability for a human player.
+     * 
+     * @param owner The player who owns the Magician.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "It's a Magician! You can attack all enemies.\n";
@@ -112,6 +169,13 @@ public:
 			std::cout << "The Magician attacked, dealing " + std::to_string(opponent.damageReduction(getDamage() + critDamage)) + " damage!\n";
 	}
 
+	/**
+     * @brief Activates the Magician's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Magician.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		for (int row = 0; row < 2; ++row) {
 			for (int col = 0; col < 4; ++col) {
@@ -129,25 +193,60 @@ public:
 	}
 };
 
+/**
+ * @class Engineer
+ * @brief A support character that reduces the opponent's defense.
+ */
 class Engineer : public CharacterCard {
 public:
+	/**
+     * @brief Constructs an Engineer card.
+     */
 	Engineer() : CharacterCard("Engineer", 2, 0, 0, 2) {}
 
+	/**
+     * @brief Activates the Engineer's ability for a human player.
+     * 
+     * @param owner The player who owns the Engineer.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "It's an Engineer! You can't attack, but you are given defense points and taken away from the opponent.\n";
 
 		opponent.addDefence(-1);
 	}
 
+	/**
+     * @brief Activates the Engineer's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Engineer.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		opponent.addDefence(-1);
 	}
 };
 
+/**
+ * @class Healer
+ * @brief A support character that heals allies.
+ */
 class Healer : public CharacterCard {
 public:
+	/**
+     * @brief Constructs a Healer card.
+     */
 	Healer() : CharacterCard("Healer", 2, 0, 4, 1) {}
 
+	/**
+     * @brief Activates the Healer's ability for a human player.
+     * 
+     * @param owner The player who owns the Healer.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "It's a Healer! You can heal a character on the field by 4 points, which you select.\n";
@@ -163,6 +262,13 @@ public:
 		owner.healingCharacter(row, col, getHealAmount());
 	}
 
+	/**
+     * @brief Activates the Healer's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Healer.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		for (int row = 0; row < 2; ++row) {
 			for (int col = 0; col < 4; ++col) {
@@ -175,10 +281,24 @@ public:
 	}
 };
 
+/**
+ * @class Nekromancer
+ * @brief A hybrid character that deals damage and can revive fallen allies.
+ */
 class Nekromancer : public CharacterCard {
 public:
+	/**
+     * @brief Constructs a Nekromancer card.
+     */
 	Nekromancer() : CharacterCard("Nekromancer", 4, 2, 1, 0) {}
 
+	/**
+     * @brief Activates the Nekromancer's ability for a human player.
+     * 
+     * @param owner The player who owns the Nekromancer.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "It's a Nekromancer! You can attack any opponent and revive a random character.\n";
@@ -210,6 +330,13 @@ public:
 		}
 	}
 
+	/**
+     * @brief Activates the Nekromancer's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Nekromancer.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		for (int row = 0; row < 2; ++row) {
 			for (int col = 0; col < 4; ++col) {
@@ -231,10 +358,25 @@ public:
 	}
 };
 
+
+/**
+ * @class Berserk
+ * @brief A powerful melee attacker that can instantly kill a target and damage adjacent cells.
+ */
 class Berserk : public CharacterCard {
 public:
+	/**
+     * @brief Constructs a Berserk card.
+     */
 	Berserk() : CharacterCard("Berserk", 8, 5, 0, 0) {}
 
+	/**
+     * @brief Activates the Berserk's ability for a human player.
+     * 
+     * @param owner The player who owns the Berserk.
+     * @param opponent The opposing player.
+     * @param r The selected row for activation.
+     */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "It's a Berserk! You can instantly kill your chosen opponent and inflict damage on neighboring ones.\n";
@@ -257,6 +399,13 @@ public:
 		std::cout << "The Berserker attacked!\n";
 	}
 
+	/**
+     * @brief Activates the Berserk's ability for an AI player.
+     * 
+     * @param owner The AI player who owns the Berserk.
+     * @param opponent The human player.
+     * @param r The selected row for activation.
+     */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		for (int row = 0; row < 2; ++row) {
 			for (int col = 0; col < 4; ++col) {

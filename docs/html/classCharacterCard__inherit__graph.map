@@ -1,0 +1,19 @@
+<map id="CharacterCard" name="CharacterCard">
+<area shape="rect" id="Node000001" title="Represents a character card that can be placed on the field." alt="" coords="268,79,383,104"/>
+<area shape="rect" id="Node000003" href="$classArcher.html" title="A ranged character that can attack any cell." alt="" coords="5,152,69,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="265,110,82,155,70,158,69,152,81,149,264,105"/>
+<area shape="rect" id="Node000004" href="$classBerserk.html" title="A powerful melee attacker that can instantly kill a target and damage adjacent cells." alt="" coords="93,152,165,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="282,111,162,154,160,149,280,106"/>
+<area shape="rect" id="Node000005" href="$classEngineer.html" title="A support character that reduces the opponent&#39;s defense." alt="" coords="190,152,269,177"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="300,114,247,154,243,150,297,110"/>
+<area shape="rect" id="Node000006" href="$classHealer.html" title="A support character that heals allies." alt="" coords="293,152,358,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="328,118,328,152,323,152,323,118"/>
+<area shape="rect" id="Node000007" href="$classKnight.html" title="A melee character that can attack enemies in the front row." alt="" coords="383,152,447,177"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="352,110,402,150,398,154,349,115"/>
+<area shape="rect" id="Node000008" href="$classMagician.html" title="A ranged character with a chance to deal critical damage." alt="" coords="471,152,553,177"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="369,106,482,149,481,154,367,111"/>
+<area shape="rect" id="Node000009" href="$classNekromancer.html" title="A hybrid character that deals damage and can revive fallen allies." alt="" coords="577,152,687,177"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="388,104,583,149,582,154,387,110"/>
+<area shape="rect" id="Node000002" href="$classCard.html" title="Base class for all cards in the game." alt="" coords="299,5,351,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="328,44,328,79,323,79,323,44"/>
+</map>

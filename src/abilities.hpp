@@ -1,15 +1,35 @@
+/**
+ * @file abilities.hpp
+ * @brief Contains declarations of various AbilityCard subclasses representing different ability effects.
+ */
+
 #ifndef ABILITIES_H
 #define ABILITIES_H
 
 #include "card.hpp"
 #include "player.hpp"
 
+
+/**
+ * @class HealthBonus
+ * @brief Ability card that heals a selected character on the field.
+ */
 class HealthBonus : public AbilityCard {
 private:
-	int hpBonus;
+	int hpBonus; ///< Amount of health to restore
 public:
+	/**
+	 * @brief Constructs a HealthBonus card with a specified healing amount.
+	 * @param _hpBonus The amount of health to restore.
+	 */
 	HealthBonus(int _hpBonus) : AbilityCard("HealthBonus"), hpBonus(_hpBonus) {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "You have activated the health bonus!\n";
@@ -24,6 +44,12 @@ public:
 		std::cout << "HealthBonus has been activated...\n";
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the HealthBonus...\n";
 		for (int row = 0; row < 2; ++row) {
@@ -36,18 +62,35 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "HealthBonus\n";
 		std::cout << "This ability card can heal a certain number of hp of the selected character.\n";
 	}
 };
 
+/**
+ * @class DamageBonus
+ * @brief Ability card that deals damage to a selected opponent's character.
+ */
 class DamageBonus : public AbilityCard {
 private:
-	int dmgBonus;
+	int dmgBonus; ///< Amount of damage to deal
 public:
+	/**
+	 * @brief Constructs a DamageBonus card with a specified damage amount.
+	 * @param _dmgBonus The amount of damage.
+	 */
 	DamageBonus(int _dmgBonus) : AbilityCard("DamageBonus"), dmgBonus(_dmgBonus) {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "You have activated the damage bonus!\n";
@@ -62,6 +105,12 @@ public:
 		std::cout << "DamageBonus has been activated...\n";
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the DamageBonus...\n";
 		for (int row = 0; row < 2; ++row) {
@@ -74,6 +123,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "DamageBonus\n";
 		std::cout << "You can use this card to inflict damage on your chosen opponent.\n";
@@ -86,6 +138,12 @@ private:
 public:
 	CommonHealthBonus(int _commonHpBonus) : AbilityCard("CommonHealthBonus"), commonHpBonus(_commonHpBonus) {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "You have activated the Common Health Bonus!\n";
 
@@ -95,6 +153,12 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the CommonHealthBonus...\n";
 		for (int i = 0; i < 2; ++i) {
@@ -103,6 +167,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "CommonHealthBonus\n";
 		std::cout << "Heals all the characters on the field for a certain amount of hp.\n";
@@ -115,18 +182,33 @@ private:
 public:
 	DefenceBonus(int _defB) : AbilityCard("DefenceBonus"), defB(_defB) {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "You have activated the DefenceBonus!\n";
 
 		owner.addDefence(defB);
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the DefenceBonus...\n";
 
 		owner.addDefence(defB);
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "DefenceBonus\n";
 		std::cout << "Gives extra defence points\n";
@@ -137,6 +219,12 @@ class ReflectionDamage : public AbilityCard {
 public:
 	ReflectionDamage() : AbilityCard("ReflectionDamage") {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "You have activated the Reflection Damage!\n";
@@ -150,6 +238,12 @@ public:
 		owner.setReflection(row, col);
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the ReflectionDamage...\n";
 
@@ -162,6 +256,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "ReflectionDamage\n";
 		std::cout << "Grants the selected character the ability to reflect the next damage done\n";
@@ -172,6 +269,12 @@ class CardTheft : public AbilityCard {
 public:
 	CardTheft() : AbilityCard("CardTheft") {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "You have activated the Card Theft Bonus!\n";
 
@@ -181,6 +284,12 @@ public:
 		std::cout << "Ha-ha-ha! The card has been stolen...\n";
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the CardTheft...\n";
 
@@ -189,6 +298,9 @@ public:
 		owner.addCharacterToHand(opponent.popCharacterFromHand(0));
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "CardTheft\n";
 		std::cout << "Steals the first card in the opponent's hand\n";
@@ -202,6 +314,12 @@ private:
 public:
 	FireBall(int _centerDmg, int _envirDmg) : AbilityCard("FireBall"), centerDmg(_centerDmg), envirDmg(_envirDmg) {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "You have activated the Fire Ball!\n";
@@ -221,6 +339,12 @@ public:
 			opponent.takeDamage(row, col + 1, envirDmg);
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the FireBall...\n";
 
@@ -240,6 +364,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "FireBall\n";
 		std::cout << "Deals damage to the chosen opponent and those around him\n";
@@ -250,12 +377,24 @@ class ShieldRowBonus : public AbilityCard {
 public:
 	ShieldRowBonus() : AbilityCard("ShieldRowBonus") {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		std::cout << "You have activated the Row Shield!\n";
 		for (int j = 0; j < 4; ++j)
 			owner.setReflection(0, j);
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the ShieldRowBonus...\n";
 
@@ -263,6 +402,9 @@ public:
 			owner.setReflection(0, j);
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "ShieldRowBonus\n";
 		std::cout << "Reflects damage to the entire near row\n";
@@ -273,6 +415,12 @@ class RageBonus : public AbilityCard {
 public:
 	RageBonus() : AbilityCard("RageBonus") {}
 
+	/**
+	 * @brief Activates the ability in a player-controlled game.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activate(Player& owner, Player& opponent, int r) override {
 		int row, col;
 		std::cout << "You have activated the Rage Bonus!\n";
@@ -286,6 +434,12 @@ public:
 		opponent.takeDamage(row, col, 100);
 	}
 
+	/**
+	 * @brief Activates the ability in an AI-controlled scenario.
+	 * @param owner The player who owns the card.
+	 * @param opponent The opponent player.
+	 * @param r The row index (unused).
+	 */
 	void activateAI(Player& owner, Player& opponent, int r) override {
 		std::cout << "The AI has activated the RageBonus...\n";
 
@@ -299,6 +453,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Prints information about the card.
+	 */
 	void printInfo() const override {
 		std::cout << "RageBonus\n";
 		std::cout << "Instantly kills the selected opponent\n";

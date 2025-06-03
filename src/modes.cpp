@@ -1,5 +1,8 @@
 #include "modes.hpp"
 
+/**
+ * @brief Displays the battlefield with player characters and defensive coefficients.
+ */
 void PvPMode::displayField() {
 	std::cout << "FIELD (Player1 on the top)             First player defence: " << player1.getDefCoef() << " | Second player defence: " << player2.getDefCoef() << '\n';
 	std::cout << "  0 1 2 3\n";
@@ -14,6 +17,9 @@ void PvPMode::displayField() {
 	std::cout << "  0 1 2 3\n";
 }
 
+/**
+ * @brief Displays the current player's hand.
+ */
 void PvPMode::displayCurrentPlayerHand() {
 	if (currentPlayer == 1) {
 		player1.printHand(false);
@@ -22,6 +28,12 @@ void PvPMode::displayCurrentPlayerHand() {
 	}
 }
 
+/**
+ * @brief Handles a turn for the specified player in PvP mode.
+ * 
+ * @param currentPlayerObj The player who is taking the turn.
+ * @param opponentPlayerObj The opponent player.
+ */
 void PvPMode::processPlayerTurn(Player& currentPlayerObj, Player& opponentPlayerObj) {
 	int cardIndex, row, col;
 	if (!currentPlayerObj.isCharEmpty() && !currentPlayerObj.isFieldFull()) {
@@ -76,6 +88,12 @@ void PvPMode::processPlayerTurn(Player& currentPlayerObj, Player& opponentPlayer
 	}
 }
 
+/**
+ * @brief Checks if the game is over in PvP mode.
+ * 
+ * @return true if the game has ended and a winner is determined or the game is a draw.
+ * @return false if the game should continue.
+ */
 bool PvPMode::checkWin() {
 	// if ((player1.isCharEmpty() || player1.isFieldFull()) && (player2.isCharEmpty() || player2.isFieldFull()) && player1.isAbilEmpty() && player2.isAbilEmpty()) {
 	if (((player1.isCharEmpty() || player1.isFieldFull()) && (player2.isCharEmpty() || player2.isFieldFull())) || player1.getSkipCount() >= 2 || player2.getSkipCount() >= 2) {
@@ -96,6 +114,9 @@ bool PvPMode::checkWin() {
 	return false;
 }
 
+/**
+ * @brief Starts the Player vs Player (PvP) game loop.
+ */
 void PvPMode::start() {
 	while (!checkWin()) {
 		clearScreen();
@@ -118,15 +139,9 @@ void PvPMode::start() {
 }
 
 
-
-
-
-
-
-
-
-
-
+/**
+ * @brief Displays the battlefield with AI and player fields, including defensive stats.
+ */
 void PvEMode::displayField() {
 	std::cout << "FIELD (AI on the top)             AI defence: " << AIPlayer.getDefCoef() << " | Player defence: " << player.getDefCoef() << '\n';
 	std::cout << "  0 1 2 3\n";
@@ -141,12 +156,17 @@ void PvEMode::displayField() {
 	std::cout << "  0 1 2 3\n";
 }
 
+/**
+ * @brief Displays the human player's hand.
+ */
 void PvEMode::displayCurrentPlayerHand() {
 	if (currentPlayer == 2) 
 		player.printHand(true);
 }
 
-
+/**
+ * @brief Processes the human player's turn in PvE mode.
+ */
 void PvEMode::processPlayerTurn() {
 	int cardIndex, row, col;
 	if (!player.isCharEmpty() && !player.isFieldFull()) {
@@ -195,6 +215,9 @@ void PvEMode::processPlayerTurn() {
 	}
 }
 
+/**
+ * @brief Executes a random move for the AI, placing a character or using an ability.
+ */
 void PvEMode::makeAITurn() {
 	int cardIndex = -1, row = -1, col = -1;
 	if (!AIPlayer.isCharEmpty() && !AIPlayer.isFieldFull()) {
@@ -244,6 +267,11 @@ void PvEMode::makeAITurn() {
 	}
 }
 
+/**
+ * @brief Checks if the game is over in PvE mode.
+ * 
+ * @return true if the game has concluded (win/loss), false otherwise.
+ */
 bool PvEMode::checkWin() {
 	if (((player.isCharEmpty() || player.isFieldFull()) && (AIPlayer.isCharEmpty() || AIPlayer.isFieldFull())) || player.getSkipCount() >= 2) {
 		clearScreen();
@@ -271,6 +299,9 @@ bool PvEMode::checkWin() {
 	return false;
 }
 
+/**
+ * @brief Starts the Player vs AI (PvE) game loop.
+ */
 void PvEMode::start() {
 	while (!checkWin()) {
 		clearScreen();
@@ -294,20 +325,19 @@ void PvEMode::start() {
 
 
 
-
-
-
-
-
-
-
-
-
+/**
+ * @brief CampaignMode constructor that sets up a 3-level PvE campaign.
+ */
 CampaignMode::CampaignMode() {
 	for (int i = 0; i < 3; ++i)
 		levels.push_back(std::make_unique<PvEMode>());
 }
 
+/**
+ * @brief Prints narrative and story text before each level in the campaign.
+ * 
+ * @param level The index of the level (0-based).
+ */
 void CampaignMode::printMessage(int level) {
 	switch (level) {
 		case 0:
@@ -340,6 +370,9 @@ void CampaignMode::printMessage(int level) {
 	std::cin.get();
 }
 
+/**
+ * @brief Starts the multi-level PvE campaign.
+ */
 void CampaignMode::start() {
 	for (int i = 0; i < 3; ++i) {
 		clearScreen();

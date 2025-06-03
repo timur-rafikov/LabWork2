@@ -1,0 +1,39 @@
+<map id="Card" name="Card">
+<area shape="rect" id="Node000001" title="Base class for all cards in the game." alt="" coords="5,424,57,449"/>
+<area shape="rect" id="Node000002" href="$classAbilityCard.html" title="Represents an ability card that performs an effect when activated." alt="" coords="115,228,210,253"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="46,411,150,252,155,255,51,414"/>
+<area shape="rect" id="Node000012" href="$classCharacterCard.html" title="Represents a character card that can be placed on the field." alt="" coords="105,572,220,597"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="55,458,152,570,148,574,51,462"/>
+<area shape="rect" id="Node000003" href="$classCardTheft.html" title=" " alt="" coords="307,5,393,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,214,180,175,200,128,229,81,266,40,285,28,306,21,308,26,288,33,270,44,233,84,205,131,185,177,173,215"/>
+<area shape="rect" id="Node000004" href="$classCommonHealthBonus.html" title=" " alt="" coords="268,55,432,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="173,214,208,152,235,118,266,89,288,78,290,82,270,94,239,122,213,155,177,217"/>
+<area shape="rect" id="Node000005" href="$classDamageBonus.html" title="Ability card that deals damage to a selected opponent&#39;s character." alt="" coords="291,104,409,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="181,215,218,176,267,138,292,127,294,132,269,143,221,180,185,219"/>
+<area shape="rect" id="Node000006" href="$classDefenceBonus.html" title=" " alt="" coords="292,153,408,179"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="198,219,267,188,300,176,302,181,269,192,201,224"/>
+<area shape="rect" id="Node000007" href="$classFireBall.html" title=" " alt="" coords="315,203,385,228"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="223,230,314,217,315,223,224,235"/>
+<area shape="rect" id="Node000008" href="$classHealthBonus.html" title="Ability card that heals a selected character on the field." alt="" coords="297,252,403,277"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="224,246,298,255,297,261,223,251"/>
+<area shape="rect" id="Node000009" href="$classRageBonus.html" title=" " alt="" coords="303,301,397,327"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="202,257,269,286,305,299,303,304,267,291,200,262"/>
+<area shape="rect" id="Node000010" href="$classReflectionDamage.html" title=" " alt="" coords="279,351,421,376"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="186,263,222,300,269,336,297,348,295,353,267,340,219,304,182,266"/>
+<area shape="rect" id="Node000011" href="$classShieldRowBonus.html" title=" " alt="" coords="285,400,415,425"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="178,264,213,325,239,358,270,385,293,398,290,402,266,390,235,361,209,328,173,267"/>
+<area shape="rect" id="Node000013" href="$classArcher.html" title="A ranged character that can attack any cell." alt="" coords="318,449,382,475"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="181,559,218,521,267,484,292,472,317,465,319,470,294,477,269,488,222,525,185,563"/>
+<area shape="rect" id="Node000014" href="$classBerserk.html" title="A powerful melee attacker that can instantly kill a target and damage adjacent cells." alt="" coords="314,499,386,524"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="199,563,267,533,313,518,315,523,269,538,202,568"/>
+<area shape="rect" id="Node000015" href="$classEngineer.html" title="A support character that reduces the opponent&#39;s defense." alt="" coords="311,548,389,573"/>
+<area shape="poly" id="edge14_Node000012_Node000015" title=" " alt="" coords="233,573,310,563,310,568,234,578"/>
+<area shape="rect" id="Node000016" href="$classHealer.html" title="A support character that heals allies." alt="" coords="317,597,383,623"/>
+<area shape="poly" id="edge15_Node000012_Node000016" title=" " alt="" coords="234,592,318,603,317,608,233,597"/>
+<area shape="rect" id="Node000017" href="$classKnight.html" title="A melee character that can attack enemies in the front row." alt="" coords="318,647,382,672"/>
+<area shape="poly" id="edge16_Node000012_Node000017" title=" " alt="" coords="202,601,269,632,319,648,317,653,267,636,199,606"/>
+<area shape="rect" id="Node000018" href="$classMagician.html" title="A ranged character with a chance to deal critical damage." alt="" coords="309,696,391,721"/>
+<area shape="poly" id="edge17_Node000012_Node000018" title=" " alt="" coords="185,606,222,645,269,681,310,698,308,703,267,686,218,649,181,610"/>
+<area shape="rect" id="Node000019" href="$classNekromancer.html" title="A hybrid character that deals damage and can revive fallen allies." alt="" coords="295,745,405,771"/>
+<area shape="poly" id="edge18_Node000012_Node000019" title=" " alt="" coords="178,609,213,670,239,703,270,730,296,744,293,749,266,735,235,706,209,673,173,611"/>
+</map>

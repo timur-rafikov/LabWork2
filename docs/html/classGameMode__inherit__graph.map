@@ -1,0 +1,9 @@
+<map id="GameMode" name="GameMode">
+<area shape="rect" id="Node000001" title="Abstract base class representing a game mode." alt="" coords="147,5,244,31"/>
+<area shape="rect" id="Node000002" href="$classCampaignMode.html" title="Campaign&#45;style mode with multiple sequential PvE levels." alt="" coords="5,79,129,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,40,90,81,87,76,161,35"/>
+<area shape="rect" id="Node000003" href="$classPvEMode.html" title="Player vs AI game mode implementation." alt="" coords="154,79,237,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,44,198,79,193,79,193,44"/>
+<area shape="rect" id="Node000004" href="$classPvPMode.html" title="Player vs Player game mode implementation." alt="" coords="261,79,343,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="225,36,286,76,283,81,222,40"/>
+</map>
