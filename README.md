@@ -12,6 +12,14 @@ The documentation is implemented using Doxygen
 ```
 docs/html/index
 ```
+## Additional Functionality Report
+```
+docs/addictfuncreport.md
+```
+## Testing Report
+```
+docs/testingreport.md
+```
 ## Build
 ```
 make
