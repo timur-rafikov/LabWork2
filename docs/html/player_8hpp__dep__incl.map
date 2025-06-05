@@ -1,0 +1,22 @@
+<map id="src/player.hpp" name="src/player.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="165,5,278,31"/>
+<area shape="rect" id="Node000002" href="$abilities_8hpp.html" title="Contains declarations of various AbilityCard subclasses representing different ability effects." alt="" coords="21,152,147,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="200,42,161,81,96,153,92,150,157,77,197,38"/>
+<area shape="rect" id="Node000003" href="$player_8cpp.html" title=" " alt="" coords="28,225,140,251"/>
+<area shape="poly" id="edge12_Node000001_Node000003" title=" " alt="" coords="170,38,129,55,84,80,43,113,26,132,12,153,8,163,9,173,20,192,40,209,62,223,59,227,37,214,16,196,4,175,3,163,7,151,22,129,40,109,81,76,126,51,168,33"/>
+<area shape="rect" id="Node000004" href="$card_8hpp.html" title=" " alt="" coords="171,79,272,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="215,44,217,78,212,79,210,45"/>
+<area shape="rect" id="Node000006" href="$characters_8hpp.html" title=" " alt="" coords="295,152,436,177"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="246,38,286,77,356,150,353,154,282,81,242,42"/>
+<area shape="rect" id="Node000007" href="$modes_8hpp.html" title=" " alt="" coords="417,79,535,104"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="277,32,436,76,434,81,275,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,191,87,225,81,225,81,191"/>
+<area shape="poly" id="edge8_Node000004_Node000001" title=" " alt="" coords="227,65,226,31,231,31,233,65"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="189,113,108,154,105,149,186,108"/>
+<area shape="rect" id="Node000005" href="$card_8cpp.html" title=" " alt="" coords="171,152,271,177"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="224,118,224,152,219,152,219,118"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="258,108,343,149,341,154,256,112"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="308,183,130,228,129,223,306,178"/>
+<area shape="rect" id="Node000008" href="$modes_8cpp.html" title=" " alt="" coords="461,152,577,177"/>
+<area shape="poly" id="edge11_Node000007_Node000008" title=" " alt="" coords="492,114,514,151,510,153,488,117"/>
+</map>
